@@ -15,6 +15,7 @@ import {AppRootStateType} from '../../app/store'
 import {setAppStatusAC} from '../../app/app-reducer'
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {clearTasksAndTodolist} from "../../common/actions/common-actions";
 
 const initialState: TasksStateType = {}
 
@@ -38,7 +39,7 @@ export const slice = createSlice({
         },
         setTasksAC: (state, action: PayloadAction<{ tasks: Array<TaskType>, todolistId: string }>) => {
             state[action.payload.todolistId] = action.payload.tasks
-        }
+        },
 
     },
     extraReducers: builder => {
@@ -52,7 +53,11 @@ export const slice = createSlice({
             return action.payload.todolists.forEach(todo => {
                 state[todo.id] = []
             })
-        })
+        });
+        builder.addCase(clearTasksAndTodolist, () => {
+                return {};
+            }
+        )
     }
 })
 
