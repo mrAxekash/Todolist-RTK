@@ -5,6 +5,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {clearTasksAndTodolist} from "common/actions/common-actions";
 import {appActions} from "app/app-reducer";
 
+export type InitialStateType = typeof initialState
+
 const initialState = {
     isLoggedIn: false
 }
