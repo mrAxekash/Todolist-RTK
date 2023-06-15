@@ -1,9 +1,9 @@
 import {Dispatch} from 'redux'
-import {setAppStatusAC} from '../../app/app-reducer'
-import {authAPI, LoginParamsType} from '../../api/todolists-api'
-import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils'
+import {authAPI, LoginParamsType} from 'api/todolists-api'
+import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {clearTasksAndTodolist} from "../../common/actions/common-actions";
+import {clearTasksAndTodolist} from "common/actions/common-actions";
+import {appActions} from "app/app-reducer";
 
 const initialState = {
     isLoggedIn: false
@@ -25,12 +25,12 @@ export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(appActions.setAppStatusAC({status: 'loading'}))
     authAPI.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({value: true}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
+                dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -40,12 +40,12 @@ export const loginTC = (data: LoginParamsType) => (dispatch: ThunkDispatch) => {
         })
 }
 export const logoutTC = () => (dispatch: ThunkDispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(appActions.setAppStatusAC({status: 'loading'}))
     authAPI.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({value: false}))
-                dispatch(setAppStatusAC({ status: 'succeeded'}))
+                dispatch(appActions.setAppStatusAC({ status: 'succeeded'}))
                 dispatch(clearTasksAndTodolist())
             } else {
                 handleServerAppError(res.data, dispatch)

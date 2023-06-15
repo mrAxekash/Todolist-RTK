@@ -3,7 +3,7 @@ import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField
 import {useFormik} from 'formik'
 import {useDispatch, useSelector} from 'react-redux'
 import {loginTC} from './auth-reducer'
-import {AppRootStateType} from '../../app/store'
+import {AppRootStateType} from 'app/store'
 import { Redirect } from 'react-router-dom'
 
 export const Login = () => {
@@ -23,7 +23,6 @@ export const Login = () => {
                     password: 'Password is required'
                 }
             }
-
         },
         initialValues: {
             email: '',

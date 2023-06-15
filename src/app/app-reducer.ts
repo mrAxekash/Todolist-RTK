@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux'
-import {authAPI} from '../api/todolists-api'
-import {setIsLoggedInAC} from '../features/Login/auth-reducer'
+import {authAPI} from 'api/todolists-api'
+import {setIsLoggedInAC} from 'features/Login/auth-reducer'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
@@ -30,7 +30,7 @@ const slice = createSlice({
 })
 
 export const appReducer = slice.reducer
-export const {setAppErrorAC,setAppStatusAC, setAppInitializedAC} = slice.actions
+export const appActions = slice.actions
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
@@ -39,6 +39,6 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         } else {
 
         }
-        dispatch(setAppInitializedAC({value: true}));
+        dispatch(appActions.setAppInitializedAC({value: true}));
     })
 }
