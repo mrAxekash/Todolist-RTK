@@ -1,4 +1,4 @@
-import {appActions, appReducer, InitialStateAppType} from './app-reducer'
+import {appActions, appReducer, InitialStateAppType} from 'app/app.reducer'
 
 
 

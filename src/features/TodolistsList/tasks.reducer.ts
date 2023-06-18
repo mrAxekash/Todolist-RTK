@@ -11,8 +11,8 @@ import {AppRootStateType} from 'app/store'
 import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {clearTasksAndTodolist} from "common/actions/common-actions";
-import {appActions} from "app/app-reducer";
-import {todolistsActions} from "features/TodolistsList/todolists-reducer";
+import {appActions} from "app/app.reducer";
+import {todolistsActions} from "features/TodolistsList/todolists.reducer";
 
 const initialState: TasksStateType = {}
 
