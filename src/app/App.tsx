@@ -14,7 +14,7 @@ import {Menu} from '@material-ui/icons'
 import {TodolistsList} from 'features/TodolistsList/TodolistsList'
 import {ErrorSnackbar} from 'components/ErrorSnackbar/ErrorSnackbar'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from './store'
+import {AppRootStateType, useAppDispatch} from './store'
 import {initializeAppTC, RequestStatusType} from 'app/app.reducer'
 import {BrowserRouter, Route} from 'react-router-dom'
 import {Login} from 'features/auth/Login'
@@ -30,7 +30,7 @@ function App({demo = false}: PropsType) {
     const status = useSelector(selectorStatus)
     const isInitialized = useSelector(selectorIsInitialized)
     const isLoggedIn = useSelector(selectIsLoggedIn)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())

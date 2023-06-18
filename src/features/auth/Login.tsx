@@ -5,9 +5,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import {loginTC} from 'features/auth/auth.reducer'
 import { Redirect } from 'react-router-dom'
 import {selectIsLoggedIn} from "features/auth/auth.selectors";
+import {useAppDispatch} from "app/store";
 
 export const Login = () => {
-    const dispatch = useDispatch()
+
+    const dispatch = useAppDispatch()
 
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
