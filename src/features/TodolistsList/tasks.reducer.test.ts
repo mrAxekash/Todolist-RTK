@@ -45,22 +45,24 @@ test('correct task should be deleted from correct array', () => {
     expect(endState["todolistId2"].length).toBe(2);
     expect(endState["todolistId2"].every(t => t.id != "2")).toBeTruthy();
 });
+
 test('correct task should be added to correct array', () => {
     //const action = addTaskAC("juce", "todolistId2");
-    const action = tasksActions.addTaskAC({
-        task: {
-            todoListId: "todolistId2",
-            title: "juce",
-            status: TaskStatuses.New,
-            addedDate: "",
-            deadline: "",
-            description: "",
-            order: 0,
-            priority: 0,
-            startDate: "",
-            id: "id exists"
-        }
-    });
+    const task = {
+        todoListId: "todolistId2",
+        title: "juce",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        description: "",
+        order: 0,
+        priority: 0,
+        startDate: "",
+        id: "id exists"
+    }
+    const action = tasksThunk.addTask.fulfilled({
+        task
+    }, 'requestId', {title: task.title, todolistId: task.todoListId});
 
     const endState = tasksReducer(startState, action)
 
@@ -71,11 +73,12 @@ test('correct task should be added to correct array', () => {
     expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New);
 });
 test('status of specified task should be changed', () => {
-    const action = tasksActions.updateTaskAC({
+    const args = {
         taskId: "2",
         model: {status: TaskStatuses.New},
         todolistId: "todolistId2"
-    });
+    }
+    const action = tasksThunk.updateTask.fulfilled(args, 'requestId', args)
 
     const endState = tasksReducer(startState, action)
 
@@ -83,9 +86,10 @@ test('status of specified task should be changed', () => {
     expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New);
 });
 test('title of specified task should be changed', () => {
-    const action = tasksActions.updateTaskAC({
+    const args = {
         taskId: "2", model: {title: "yogurt"}, todolistId: "todolistId2"
-    });
+    }
+    const action = tasksThunk.updateTask.fulfilled(args, 'requestId', args);
 
     const endState = tasksReducer(startState, action)
 

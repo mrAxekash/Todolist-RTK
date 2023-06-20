@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {UpdateDomainTaskModelType} from "features/TodolistsList/tasks.reducer";
 
 const settings = {
     withCredentials: true,
@@ -35,8 +36,8 @@ export const todolistsAPI = {
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
-    createTask(todolistId: string, taskTitile: string) {
-        return instance.post<ResponseType<{ item: TaskType}>>(`todo-lists/${todolistId}/tasks`, {title: taskTitile});
+    createTask(data: createTaskArgType) {
+        return instance.post<ResponseType<{ item: TaskType}>>(`todo-lists/${data.todolistId}/tasks`, {title: data.title});
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
@@ -91,6 +92,19 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
+
+// export enum ResultCode {
+//     Success = 0,
+//     Error = 1,
+//     Captcha = 10,
+// } Для красоты повторяющихся магических чисел, можно использовать enum, но предпочтительнее использовать объект, и для того, чтобы он не изменялся, применять свойство as const
+
+export const ResultCode = {
+    Success: 0,
+    Error: 1,
+    Captcha: 10,
+} as const
+
 export type TaskType = {
     description: string
     title: string
@@ -115,4 +129,15 @@ type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
+}
+
+export type createTaskArgType = {
+    title: string
+    todolistId: string
+}
+
+export type UpdateTaskArgType = {
+    taskId: string,
+    model: UpdateDomainTaskModelType,
+    todolistId: string
 }
