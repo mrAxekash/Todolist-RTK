@@ -4,9 +4,31 @@ import {appActions, RequestStatusType} from 'app/app.reducer'
 import {handleServerAppError, handleServerNetworkError} from 'utils/error-utils'
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {clearTasksAndTodolist} from "common/actions/common-actions";
+import {createAppAsyncThunk} from "utils/create-app-async-thunk";
 
 const initialState: Array<TodolistDomainType> = []
 
+const removeTodolist = createAppAsyncThunk<any, string>('todolist/removeTodolist', (arg, thunkAPI) => {
+    const {dispatch, rejectWithValue} = thunkAPI
+
+
+
+})
+
+export const removeTodolistTC = (todolistId: string) => {
+    return (dispatch: ThunkDispatch) => {
+        //изменим глобальный статус приложения, чтобы вверху полоса побежала
+        dispatch(appActions.setAppStatusAC({status: 'loading'}))
+        //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
+        dispatch(todolistsActions.changeTodolistEntityStatusAC({id: todolistId, status: 'loading'}))
+        todolistsAPI.deleteTodolist(todolistId)
+            .then((res) => {
+                dispatch(todolistsActions.removeTodolistAC({id: todolistId}))
+                //скажем глобально приложению, что асинхронная операция завершена
+                dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
+            })
+    }
+}
 
 const slice = createSlice({
     name: 'todolist',
@@ -61,20 +83,7 @@ export const fetchTodolistsTC = () => {
             })
     }
 }
-export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: ThunkDispatch) => {
-        //изменим глобальный статус приложения, чтобы вверху полоса побежала
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
-        //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
-        dispatch(todolistsActions.changeTodolistEntityStatusAC({id: todolistId, status: 'loading'}))
-        todolistsAPI.deleteTodolist(todolistId)
-            .then((res) => {
-                dispatch(todolistsActions.removeTodolistAC({id: todolistId}))
-                //скажем глобально приложению, что асинхронная операция завершена
-                dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
-            })
-    }
-}
+
 export const addTodolistTC = (title: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(appActions.setAppStatusAC({status: 'loading'}))
