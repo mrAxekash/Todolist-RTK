@@ -131,7 +131,7 @@ const slice = createSlice({
       })
       .addCase(changeTodolistTitle.fulfilled, (state, action) => {
         const index = state.findIndex((todo) => todo.id === action.payload.id);
-        state.splice(index, 1);
+        if (index !== -1) state[index].title = action.payload.title;
       });
   },
 });
