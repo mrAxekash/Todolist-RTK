@@ -1,4 +1,3 @@
-import {AppRootStateType} from "app/store";
+import { AppRootStateType } from "app/store";
 
-
-export const selectorTodolists = (state: AppRootStateType) => state.todolists
+export const selectorTodolists = (state: AppRootStateType) => state.todolists;
