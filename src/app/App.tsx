@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import "./App.css";
+import "app/App.css";
 import {
   AppBar,
   Button,
@@ -12,15 +12,15 @@ import {
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import { TodolistsList } from "features/TodolistsList/TodolistsList";
-import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType, useAppDispatch } from "./store";
-import { initializeAppTC, RequestStatusType } from "app/app.reducer";
+import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Login } from "features/auth/Login";
 import { logoutTC } from "features/auth/auth.reducer";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
 import { selectorIsInitialized, selectorStatus } from "app/app.selectors";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
+import { initializeAppTC } from "app/app.reducer";
 
 type PropsType = {
   demo?: boolean;
